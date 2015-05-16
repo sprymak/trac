@@ -479,7 +479,8 @@ def dispatch_request(environ, start_response):
             # the remaining path in the `PATH_INFO` variable.
             script_name = environ.get('SCRIPT_NAME', '')
             try:
-                script_name = unicode(script_name, 'utf-8')
+                if isinstance(script_name, str):
+                    script_name = unicode(script_name, 'utf-8')
                 # (as Href expects unicode parameters)
                 environ['SCRIPT_NAME'] = Href(script_name)(env_name)
                 environ['PATH_INFO'] = '/' + '/'.join(path_info)
